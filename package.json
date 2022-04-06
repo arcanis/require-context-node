@@ -1,0 +1,11 @@
+{
+  "name": "require-context-node",
+  "version": "1.0.0",
+  "packageManager": "yarn@3.2.0",
+  "dependencies": {
+    "enhanced-resolve": "^5.9.2"
+  },
+  "files": [
+    "./index.js"
+  ]
+}
