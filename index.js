@@ -65,8 +65,13 @@ const setup = () => {
   if (isSetup)
     return;
 
+  const prefix = `require.context = global.makeRequireContext(module);\n`;
   globalThis.makeRequireContext = makeRequireContext;
-  Module.wrapper[0] += `require.context = global.makeRequireContext(module);`;
+
+  const compile = Module.prototype._compile;
+  Module.prototype._compile = function (content, filename) {
+    return compile.call(this, prefix + content, filename);
+  };
 
   isSetup = true;
 };
