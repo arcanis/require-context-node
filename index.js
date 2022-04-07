@@ -70,7 +70,7 @@ const setup = () => {
 
   const compile = Module.prototype._compile;
   Module.prototype._compile = function (content, filename) {
-    return compile.call(this, prefix + content, filename);
+    return compile.call(this, content.replace(/^\uFEFF?(#!.*?(\r\n|[\r\n]|$))?/, $0 => $0 + prefix), filename);
   };
 
   isSetup = true;
