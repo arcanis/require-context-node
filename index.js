@@ -1,7 +1,7 @@
 const fs = require(`fs`);
 const path = require(`path`);
 const Module = require(`module`);
-const {SyncFileSystem, ResolverFactory} = require(`enhanced-resolve`);
+const {ResolverFactory} = require(`enhanced-resolve`);
 
 const asyncModes = new Set([`lazy-once`, `lazy`, `async-weak`]);
 
@@ -59,9 +59,23 @@ const makeRequireContext = module => {
   };
 };
 
-if (!require.main) {
+let isSetup = false;
+
+const setup = () => {
+  if (isSetup)
+    return;
+
   globalThis.makeRequireContext = makeRequireContext;
   Module.wrapper[0] += `require.context = global.makeRequireContext(module);`;
+
+  isSetup = true;
+};
+
+if (!require.main) {
+  setup();
 }
 
-module.exports = makeRequireContext;
+module.exports = {
+  setup,
+  makeRequireContext
+};
