@@ -65,7 +65,7 @@ const setup = () => {
   if (isSetup)
     return;
 
-  const prefix = `require.context = global.makeRequireContext(module);\n`;
+  const prefix = `require.context = globalThis.makeRequireContext(module);\n`;
   globalThis.makeRequireContext = makeRequireContext;
 
   const compile = Module.prototype._compile;
